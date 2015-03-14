@@ -1,0 +1,7 @@
+﻿to get info from particular stop (example - wioślarska)
+url: 
+http://www.peka.poznan.pl/vm/method.vm?ts=1426074314843
+payload: 
+method=getTimes&p0=%7B%22symbol%22%3A%22WIOS41%22%7D
+response:
+{"success":{"bollard":{"symbol":"WIOS41","tag":"WIOS01","name":"Wioślarska","mainBollard":false},"times":[{"realTime":true,"minutes":0,"direction":"Starołęka","onStopPoint":false,"departure":"2015-03-14T16:43:00.000Z","line":"13"},{"realTime":true,"minutes":5,"direction":"Ogrody","onStopPoint":false,"departure":"2015-03-14T16:48:00.000Z","line":"7"},{"realTime":true,"minutes":10,"direction":"Starołęka","onStopPoint":false,"departure":"2015-03-14T16:53:00.000Z","line":"4"},{"realTime":true,"minutes":14,"direction":"Starołęka","onStopPoint":false,"departure":"2015-03-14T16:57:00.000Z","line":"12"},{"realTime":true,"minutes":20,"direction":"Starołęka","onStopPoint":false,"departure":"2015-03-14T17:03:00.000Z","line":"13"},{"realTime":false,"minutes":25,"direction":"Ogrody","onStopPoint":false,"departure":"2015-03-14T17:08:00.000Z","line":"7"}]}}
