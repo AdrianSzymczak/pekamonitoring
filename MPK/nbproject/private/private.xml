@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/data/IStopsDataLoader.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/data/StopsFileLoader.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/utils/TimeMeasurement.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/mpk/MPK.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/web/requests/IDataObtainer.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/web/requests/WebDataObtainer.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/utils/Constants.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/model/Line.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/model/Stop.java</file>
+            <file>file:/C:/Users/Adrian/Documents/NetBeansProjects/MPK/src/data/StopsHardcodedMemoryLoader.java</file>
+        </group>
+    </open-files>
+</project-private>
