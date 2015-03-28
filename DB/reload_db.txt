@@ -1,0 +1,27 @@
+drop table pekam;
+CREATE TABLE PEKAM
+( pekam_id number(10) not null,
+  symbol varchar2(10),
+  tag varchar2(10),
+  name varchar2(255),
+  mainBollard varchar2(10),
+  realtime varchar2(10),
+  minutes number(10),
+  direction varchar2(255),
+  onStopPoint varchar2(10),
+  departure varchar(50),
+  line number(10),
+  created timestamp default systimestamp,
+  CONSTRAINT pekam_id_pk PRIMARY KEY (pekam_id)
+);
+drop sequence pekam_id_seq;
+create sequence pekam_id_seq start with 1 increment by 1;
+drop trigger trg_pekam_id;
+create trigger trg_pekam_id
+  before insert on pekam
+  for each row
+  begin
+    select pekam_id_seq.nextval
+      into :new.pekam_id
+      from dual;
+    end;

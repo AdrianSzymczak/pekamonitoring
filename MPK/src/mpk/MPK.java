@@ -19,6 +19,9 @@ import model.Stop;
 import utils.Constants;
 import web.requests.IDataObtainer;
 import web.requests.WebDataObtainer;
+import database.db;
+import java.sql.SQLException;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -30,17 +33,19 @@ public class MPK {
      * @param args the command line arguments
      * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException, ParseException {
         IStopsDataLoader stopsLoader = new StopsHardcodedMemoryLoader();
         Collection<Stop> stops = stopsLoader.LoadData();
         IDataObtainer dataObtainer = new WebDataObtainer();
         Collection<String> results;
 
         // TODO: we should add classes and logic to save JSONs collection somewhere
+        db d = new db();
         while (true) {   
             results = dataObtainer.ObtainData(stops);
             for (String res : results) {
                 System.out.println(res);
+                d.saveIntoDataBase(res);
             }
         }
     }
