@@ -34,6 +34,19 @@ public class MPK {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException, SQLException, ParseException {
+
+        for (int i = 0; i < args.length; i += 2) {
+            if (args[i].equalsIgnoreCase("-from")) {
+                Constants.buildInStopsArrayFromInclusive = Integer.valueOf(args[i + 1]);
+            }
+            if (args[i].equalsIgnoreCase("-to")) {
+                Constants.buildInStopsArrayToInclusive = Integer.valueOf(args[i + 1]);
+            }
+            if (args[i].equalsIgnoreCase("-politness")) {
+                Constants.politnessMilisecondsSleep = Integer.valueOf(args[i + 1]);
+            }
+        }
+
         IStopsDataLoader stopsLoader = new StopsHardcodedMemoryLoader();
         Collection<Stop> stops = stopsLoader.LoadData();
         IDataObtainer dataObtainer = new WebDataObtainer();
@@ -41,7 +54,7 @@ public class MPK {
 
         // TODO: we should add classes and logic to save JSONs collection somewhere
         db d = new db();
-        while (true) {   
+        while (true) {
             results = dataObtainer.ObtainData(stops);
             for (String res : results) {
                 System.out.println(res);

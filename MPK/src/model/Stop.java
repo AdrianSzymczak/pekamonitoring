@@ -11,7 +11,7 @@ import java.util.Collection;
  *
  * @author Adrian
  */
-public class Stop {
+public class Stop implements Comparable<Stop> {
 
     private Collection<Line> lines;
     private String symbol;
@@ -34,5 +34,10 @@ public class Stop {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    @Override
+    public int compareTo(Stop o) {
+        return this.symbol.compareTo(o.symbol);
     }
 }

@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -50,7 +51,8 @@ public class WebDataObtainer implements IDataObtainer {
     }
 
     @Override
-    public Collection<String> ObtainData(Collection<Stop> stops) {
+    public Collection<String> ObtainData(Collection<Stop> stopsCollection) {
+        ArrayList<Stop> stops = (ArrayList<Stop>) stopsCollection;
         Collection<String> result = new LinkedList();
         try {
             url = new URL(urlString);
@@ -60,14 +62,7 @@ public class WebDataObtainer implements IDataObtainer {
         ts = new TimeMeasurement(2);
         ts.AddMeasurement();
 
-        // comment curr and max behaviour for testing full list of stops
-        int curr = 0;
-        int max = 5;
-        for (Stop stop : stops) {
-            if (curr++ > max) {
-             break;
-             }
-             
+        for (int i = Constants.buildInStopsArrayFromInclusive; i <= Constants.buildInStopsArrayToInclusive; i++) {
             try {
                 try {
                     Thread.sleep(Constants.politnessMilisecondsSleep);
@@ -75,7 +70,7 @@ public class WebDataObtainer implements IDataObtainer {
                     Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                payload = Constants.payloadTemplate.replace(Constants.replacementTemplate, stop.getSymbol());
+                payload = Constants.payloadTemplate.replace(Constants.replacementTemplate, stops.get(i).getSymbol());
                 sb = new StringBuffer();
 
                 connection = url.openConnection();
@@ -125,7 +120,7 @@ public class WebDataObtainer implements IDataObtainer {
 
         ts.AddMeasurement();
         System.out.println("(comment it for more clear result) Local measurement time[in ms]: " + ts.GetTotalDifference());
-        
+
         return result;
     }
 }

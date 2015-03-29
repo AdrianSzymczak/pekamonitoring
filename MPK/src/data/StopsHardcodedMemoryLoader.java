@@ -5,8 +5,10 @@
  */
 package data;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.Collections;
+import java.util.List;
 import model.Stop;
 
 /**
@@ -17,13 +19,16 @@ public class StopsHardcodedMemoryLoader implements IStopsDataLoader {
 
     @Override
     public Collection<Stop> LoadData() {
-        Collection<Stop> stopsCollection = new LinkedList<>();
+        Collection<Stop> stopsCollection = new ArrayList<>();
         for (String stopSymbol : stopsSymbols) {
             stopsCollection.add(new Stop(stopSymbol));
         }
+        Collections.sort((List<Stop>) stopsCollection);
         return stopsCollection;
     }
 
+    // WARNING 1: while changing it modify constants as well and see where they were used!
+    // WARNING 2: this collection will be sorted in LoadData
     private String[] stopsSymbols = {
         "MT01",
         "MT02",
