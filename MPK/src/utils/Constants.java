@@ -18,10 +18,10 @@ public class Constants {
     /* this value was empirically estimated - the less the better but we might encounter errors from the server 
      (just check it by yourself but setting it to 0
      results are visible only after about 500 requests and we need to be able to query endlessly) */
-    public static int politnessMilisecondsSleep = 333;
+    public static int politnessMilisecondsSleep = 0;
 
     public static int defaultBuildInStopsArrayFromInclusive = 0;
-    public static int defaultBuildInStopsArrayToInclusive = 1407;
+    public static int defaultBuildInStopsArrayToInclusive = 300;
     // there are 1408 elements in stops hardcoded memory loader
     public static int buildInStopsArrayFromInclusive = defaultBuildInStopsArrayFromInclusive;
     public static int buildInStopsArrayToInclusive = defaultBuildInStopsArrayToInclusive;

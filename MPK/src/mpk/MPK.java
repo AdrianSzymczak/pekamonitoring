@@ -53,12 +53,18 @@ public class MPK {
         Collection<String> results;
 
         // TODO: we should add classes and logic to save JSONs collection somewhere
-        db d = new db();
+     //   db d = new db();
         while (true) {
+              try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);
+                }
             results = dataObtainer.ObtainData(stops);
             for (String res : results) {
                 System.out.println(res);
-                d.saveIntoDataBase(res);
+                break;
+          //      d.saveIntoDataBase(res);
             }
         }
     }
