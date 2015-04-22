@@ -19,7 +19,7 @@ import model.Stop;
 import utils.Constants;
 import web.requests.IDataObtainer;
 import web.requests.WebDataObtainer;
-import database.db;
+import database.file;
 import java.sql.SQLException;
 import org.json.simple.parser.ParseException;
 
@@ -63,8 +63,9 @@ public class MPK {
             results = dataObtainer.ObtainData(stops);
             for (String res : results) {
                 System.out.println(res);
+                //d.saveIntoDataBase(res);
+                f.save_into_file(res);
                 break;
-          //      d.saveIntoDataBase(res);
             }
         }
     }
