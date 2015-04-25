@@ -41,6 +41,7 @@ public class WebDataObtainer implements IDataObtainer {
     private BufferedReader reader;
     private String response;
     private TimeMeasurement ts;
+    private static int totalCounter = 0;
 
     public WebDataObtainer() {
         urlString = Constants.URLTemplate;
@@ -49,35 +50,44 @@ public class WebDataObtainer implements IDataObtainer {
     public WebDataObtainer(String urlString) {
         this.urlString = urlString;
     }
-
+    
     @Override
     public Collection<String> ObtainData(Collection<Stop> stopsCollection) {
+        int counter;        
+        int repetitions = 3;
+        int sleepEveryN = 282;        
+        Collection<String> result = new LinkedList();        
         ArrayList<Stop> stops = (ArrayList<Stop>) stopsCollection;
-        Collection<String> result = new LinkedList();
+        ArrayList<Stop> newStops = new ArrayList<Stop>(stops.size());
+        for(Stop s : stops) {
+            newStops.add(new Stop(s));
+        }
         try {
             url = new URL(urlString);
         } catch (MalformedURLException ex) {
             Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ts = new TimeMeasurement(2);
-        ts.AddMeasurement();
-
-        for (int i = Constants.buildInStopsArrayFromInclusive; i <= Constants.buildInStopsArrayToInclusive; i++) {
+                
+        for(int i = 0; i <repetitions; i++){
+            counter = 0;
+        while(counter < stops.size()){                        
+            totalCounter++;
+            if(totalCounter % sleepEveryN == 0){
             try {
-                try {
                     Thread.sleep(Constants.politnessMilisecondsSleep);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                payload = Constants.payloadTemplate.replace(Constants.replacementTemplate, stops.get(i).getSymbol());
+                }    
+            }            
+            try {
+                payload = Constants.payloadTemplate.replace(Constants.replacementTemplate, stops.get(counter).getSymbol());
                 sb = new StringBuffer();
 
                 connection = url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.connect();
-
+                
                 os = connection.getOutputStream();
                 pw = new PrintWriter(new OutputStreamWriter(os));
                 pw.write(payload);
@@ -94,10 +104,12 @@ public class WebDataObtainer implements IDataObtainer {
 
                 is.close();
                 response = sb.toString();
-                result.add(response);
+                result.add(response); 
+                newStops.remove(counter);                
             } catch (IOException ex) {
-                Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);                
             } finally {
+                counter++;                            
                 if (pw != null) {
                     pw.close();
                 }
@@ -114,13 +126,15 @@ public class WebDataObtainer implements IDataObtainer {
                     } catch (IOException ex) {
                         Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
-            }
-        }
-
-        ts.AddMeasurement();
-        System.out.println("(comment it for more clear result) Local measurement time[in ms]: " + ts.GetTotalDifference());
-
+                }                
+            }                        
+        }        
+        stops = newStops;
+        newStops = new ArrayList<Stop>(stops.size());
+        for(Stop s : stops) {
+            newStops.add(new Stop(s));
+        }        
+        }        
         return result;
     }
 }

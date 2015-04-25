@@ -36,12 +36,6 @@ public class MPK {
     public static void main(String[] args) throws IOException, SQLException, ParseException {
 
         for (int i = 0; i < args.length; i += 2) {
-            if (args[i].equalsIgnoreCase("-from")) {
-                Constants.buildInStopsArrayFromInclusive = Integer.valueOf(args[i + 1]);
-            }
-            if (args[i].equalsIgnoreCase("-to")) {
-                Constants.buildInStopsArrayToInclusive = Integer.valueOf(args[i + 1]);
-            }
             if (args[i].equalsIgnoreCase("-politness")) {
                 Constants.politnessMilisecondsSleep = Integer.valueOf(args[i + 1]);
             }
@@ -54,18 +48,13 @@ public class MPK {
 
         // TODO: we should add classes and logic to save JSONs collection somewhere
      //   db d = new db();
-        while (true) {
-              try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        while (true) {              
             results = dataObtainer.ObtainData(stops);
             for (String res : results) {
-                System.out.println(res);
+                //System.out.println(res);
                 //d.saveIntoDataBase(res);
-                f.save_into_file(res);
-                break;
+                file.save_into_file(res);
+                //break;
             }
         }
     }

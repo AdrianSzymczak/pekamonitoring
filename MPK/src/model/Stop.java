@@ -12,10 +12,14 @@ import java.util.Collection;
  * @author Adrian
  */
 public class Stop implements Comparable<Stop> {
-
+    
     private Collection<Line> lines;
     private String symbol;
-
+    
+    public Stop(Stop another) {
+        this.symbol = another.symbol;
+    }
+    
     public Stop(String symbol) {
         this.symbol = symbol;
     }
