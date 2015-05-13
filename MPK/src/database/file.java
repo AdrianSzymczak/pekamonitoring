@@ -10,15 +10,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 /**
  *
  * @author Viz
  */
 public class file {
+    public static Random r = new Random();
+    public static int filesuffix = r.nextInt();
+    
     public static void save_into_file(String s) throws IOException{
-        String filename = get_date_filename()+".txt";
-        System.out.println("Current Date: " + filename);
+        String filename = get_date_filename()+"-"+filesuffix+".txt";
+        //System.out.println("Current Date: " + filename);
         FileWriter file = new FileWriter(filename,true); //append mode
         file.write(s);
         file.write(System.lineSeparator());

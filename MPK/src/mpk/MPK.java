@@ -13,15 +13,18 @@ import java.io.Console;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Stop;
 import utils.Constants;
 import web.requests.IDataObtainer;
 import web.requests.WebDataObtainer;
 import database.file;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.xml.crypto.Data;
 import org.json.simple.parser.ParseException;
+import org.apache.logging.log4j.*;
 
 /**
  *
@@ -29,6 +32,8 @@ import org.json.simple.parser.ParseException;
  */
 public class MPK {
 
+     static Logger log = LogManager.getLogger(MPK.class.getName());
+       
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
@@ -45,16 +50,20 @@ public class MPK {
         Collection<Stop> stops = stopsLoader.LoadData();
         IDataObtainer dataObtainer = new WebDataObtainer();
         Collection<String> results;
-
         // TODO: we should add classes and logic to save JSONs collection somewhere
      //   db d = new db();
         while (true) {              
             results = dataObtainer.ObtainData(stops);
-            for (String res : results) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            System.out.println("time: " + dateFormat.format(date) + " size " + results.size()); //2014/08/06 15:59:48
+            
+            // we should consider creating single string from results instead of for each line and creating file writer 1407 times 
+            for (String res : results) {                
+                log.error(";" + res);
+                //file.save_into_file(res);                
                 //System.out.println(res);
-                //d.saveIntoDataBase(res);
-                file.save_into_file(res);
-                //break;
+                //d.saveIntoDataBase(res);                
             }
         }
     }

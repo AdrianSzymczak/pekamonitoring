@@ -53,7 +53,7 @@ public class WebDataObtainer implements IDataObtainer {
     
     @Override
     public Collection<String> ObtainData(Collection<Stop> stopsCollection) {
-        int counter;        
+        int counter;           
         int repetitions = 3;
         int sleepEveryN = 282;        
         Collection<String> result = new LinkedList();        
@@ -69,8 +69,9 @@ public class WebDataObtainer implements IDataObtainer {
         }
                 
         for(int i = 0; i <repetitions; i++){
-            counter = 0;
-        while(counter < stops.size()){                        
+            counter = stops.size()-1;            
+        while(stops != null && stops.size() != 0 && counter >= 0){                        
+            //System.out.println("totalCounter: " + totalCounter + " counter: " + counter + " i: " + i + " stop: " + stops.get(counter).getSymbol() + " nssize " + newStops.size() + " stopsize " + stops.size());            
             totalCounter++;
             if(totalCounter % sleepEveryN == 0){
             try {
@@ -78,11 +79,11 @@ public class WebDataObtainer implements IDataObtainer {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);
                 }    
-            }            
+            }               
+            payload = Constants.payloadTemplate.replace(Constants.replacementTemplate, stops.get(counter).getSymbol());
+            sb = new StringBuffer();
+                
             try {
-                payload = Constants.payloadTemplate.replace(Constants.replacementTemplate, stops.get(counter).getSymbol());
-                sb = new StringBuffer();
-
                 connection = url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -104,12 +105,15 @@ public class WebDataObtainer implements IDataObtainer {
 
                 is.close();
                 response = sb.toString();
+                if(!response.startsWith("{\"success\""))
+                    response += (" " + stops.get(counter).getSymbol());
                 result.add(response); 
+                //System.out.println("removing from new: " + counter + " removing " + newStops.get(counter).getSymbol());
                 newStops.remove(counter);                
-            } catch (IOException ex) {
+            } catch (IOException ex) {                
                 Logger.getLogger(WebDataObtainer.class.getName()).log(Level.SEVERE, null, ex);                
             } finally {
-                counter++;                            
+                counter--;                            
                 if (pw != null) {
                     pw.close();
                 }
@@ -130,11 +134,13 @@ public class WebDataObtainer implements IDataObtainer {
             }                        
         }        
         stops = newStops;
+        if(stops != null && stops.size() != 0){
         newStops = new ArrayList<Stop>(stops.size());
         for(Stop s : stops) {
             newStops.add(new Stop(s));
         }        
         }        
+        }
         return result;
     }
 }
