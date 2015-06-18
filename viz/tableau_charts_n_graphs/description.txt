@@ -1,0 +1,17 @@
+Opis wykresów:
+
+
+count_id_per_lines
+graf z okrągami pogrupowany wg linii. Im większe koło tym więcej wpisów w bazie dla danej linii.
+
+count_id_per_lines_desc
+wykres z danymi j/w. posortowany malejąco. Widzimy, że najwięcej informacji udało się zebrać o linii 27.
+
+count_lines_per_stopname
+Wykres obrazujący ile linii przebiega przez dany przystanek. Przez Rondo Śródka przebiega najwiecej (23) linii.
+
+count_stopname_per_lines
+Odwortnie do wykresu wyżej. Zliczamy ile przystanków ma dana linia. linia 348 ma aż 37 przystanków (info prawdziwe, sprawdzone na jakdojade.pl)
+
+realTime_percentage
+ile z zebranych logów ma wartość realTime ustawioną na false, a ile na true. Te z true posiadaja informacje o minutach do odjazdu.
